@@ -38,6 +38,25 @@ func CreateTask(c *gin.Context) {
 	c.JSON(http.StatusCreated, gin.H{"message": "Task added successfully"})
 }
 
+func CreateTasksBulk(c *gin.Context) {
+	var tasks []models.Task
+
+	if err := c.ShouldBindJSON(&tasks); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	result := database.DB.Create(&tasks)
+
+	if result.Error != nil {
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": result.Error.Error()})
+		return 
+	}
+
+	c.JSON(http.StatusCreated, gin.H{"message": "Tasks created successfully"})
+	
+}
+
 func GetTaskByID(c *gin.Context) {
 	var task models.Task
 

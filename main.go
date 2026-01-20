@@ -24,6 +24,7 @@ func main() {
 	})
 
 	router.POST("/create_task", controller.CreateTask)
+	router.POST("/create_tasks", controller.CreateTasksBulk)
 	router.GET("/task/:id", controller.GetTaskByID)
 	router.GET("/tasks", controller.GetAllTasks)
 	router.GET("/status/:status", controller.GetTasksByStatus)
